@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace 命名空间 1.分类的作用、避免文件重复 2.就是与我们JAVA接口关联 -->
+<mapper namespace="org.com.yi.spring_mybatis.usermag.dao.mapper.UserMapper">
+
+	<resultMap type="UserBean" id="userMap">
+		<id property="id" column="u_id" javaType="int"></id>
+		<result property="name" column="u_name" javaType="java.lang.String" />
+		<result property="pwd" column="u_pwd" javaType="java.lang.String" />
+		<result property="age" column="u_age" javaType="java.lang.Integer" />
+	</resultMap>
+
+	<!--设置返回的主键参数 useGeneratedKeys keyProperty -->
+	<insert id="addUser" >
+		<!--#{属性名可以取值} ${属性名可以取值} 以上两种的区别在于：#取值的时候，会在参数的两侧添加''单引号 然而$取值的时候，则不会添加''单引号 
+			第二个区别在于:#取值，编译方式采用预编译,$取值,编译方式直接才编译(可能会有sql注入的危险) -->
+		insert into users values(null,#{name},#{pwd},#{age})
+
+	</insert>
+	<!-- 批量新增 -->
+	<insert id="batchSaveUserBean" parameterType="java.util.List">
+
+		insert into users(u_name,u_pwd,u_age) values
+		<foreach collection="list" item="UserBean" separator=",">
+			(#{UserBean.name},#{UserBean.pwd},#{UserBean.age})
+		</foreach>
+
+	</insert>
+
+	<update id="updateUser" parameterType="UserBean">
+
+		update users set
+		u_name=#{u.name},u_pwd=#{u.pwd},u_age=#{u.age} where u_id=#{u.id}
+
+	</update>
+	
+	<delete id="deleteUserById">
+		delete from users where u_id=#{id}
+	</delete>
+
+	<delete id="batchDeleteUserBean">
+		delete from users where u_id in
+		<foreach collection="list" item="u" open="(" close=")" separator=",">
+
+			#{u.id}
+
+		</foreach>
+	</delete>
+
+
+	<select id="findUserById" parameterType="int" resultMap="userMap">
+		select * from users where u_id=#{id}
+	</select>
+
+	<select id="findUserByNameAndPwd" parameterType="UserBean" resultMap="userMap">
+	
+	select * from users where u_name=#{name} and u_pwd=#{pwd}
+	
+	</select>
+	
+	<select id="queryUserByMap" resultType="UserBean">
+	select u.u_pwd as pwd,u.u_name as name from users as u where u.u_name like CONCAT(#{map.name},'%') and u.u_age =#{map.age} 
+		
+	</select>
+
+
+</mapper>
