@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+
+<configuration>
+	<settings>
+		<setting name="logImpl" value="LOG4J"></setting>
+	
+	</settings>
+	
+	<typeAliases>
+		<!--给类取别名 -->
+		<package name="org.com.yi.spring_mybatis.usermag.beans"></package>
+	</typeAliases>
+	
+	<environments default="01">
+		<environment id="01">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="org.gjt.mm.mysql.Driver" />
+				<!--and的转译 &amp;是&顾好的转译 -->
+				<property name="url"
+					value="jdbc:mysql://localhost:3306/spring_mybatis?useUnicode=true&amp;characterEncoding=UTF-8" />
+				<property name="username" value="root" />
+				<property name="password" value="123456" />
+			</dataSource>
+		</environment>
+	</environments>
+ 
+	<mappers>
+		<!-- <mapper resource="org/com/yi/spring_mybatis/usermag/dao/mapper/UserMapper.xml" 
+			/> -->
+		<!-- <mapper class="org.com.yi.spring_mybatis.usermag.dao.IUserBeanDao"></mapper> -->
+		<!--批量扫面SQL映射器 -->
+		<package name="org.com.yi.spring_mybatis.usermag.dao.mapper" />
+	</mappers>
+</configuration>
+
+<!--SQL映射器 -->
