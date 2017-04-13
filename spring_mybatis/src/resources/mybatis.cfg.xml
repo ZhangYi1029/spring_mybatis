@@ -7,12 +7,17 @@
 <configuration>
 	<settings>
 		<setting name="logImpl" value="LOG4J"></setting>
-	
+		
+		<setting name="lazyLoadingEnabled" value="true"/>
+		
+		<setting name="aggressiveLazyLoading" value="false"/>
 	</settings>
 	
 	<typeAliases>
 		<!--给类取别名 -->
-		<package name="org.com.yi.spring_mybatis.usermag.beans"></package>
+		<package name="org.com.yi.spring_mybatis.usermag.beans"/>
+		<package name="org.com.yi.spring_mybatis.relationmag.beans"/>
+		<package name="org.com.yi.spring_mybatis.game.beans"/>
 	</typeAliases>
 	
 	<environments default="01">
@@ -22,7 +27,7 @@
 				<property name="driver" value="org.gjt.mm.mysql.Driver" />
 				<!--and的转译 &amp;是&顾好的转译 -->
 				<property name="url"
-					value="jdbc:mysql://localhost:3306/spring_mybatis?useUnicode=true&amp;characterEncoding=UTF-8" />
+					value="jdbc:mysql://localhost:3306/spring_mybatis?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true" />
 				<property name="username" value="root" />
 				<property name="password" value="123456" />
 			</dataSource>
@@ -35,6 +40,8 @@
 		<!-- <mapper class="org.com.yi.spring_mybatis.usermag.dao.IUserBeanDao"></mapper> -->
 		<!--批量扫面SQL映射器 -->
 		<package name="org.com.yi.spring_mybatis.usermag.dao.mapper" />
+		<package name="org.com.yi.spring_mybatis.relationmag.mapper"/>
+		<package name="org.com.yi.spring_mybatis.game.mapper"/>
 	</mappers>
 </configuration>
 

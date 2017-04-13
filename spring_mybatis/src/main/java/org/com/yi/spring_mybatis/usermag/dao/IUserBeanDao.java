@@ -4,12 +4,20 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.com.yi.spring_mybatis.usermag.beans.UserBean;
 
 public interface IUserBeanDao {
 	
+	
+	public int countUserNumber(Map map);
+	
+	public List<UserBean> getUsersListByNameAndPwd(Map map);
+	
+
 	//@Insert("insert into users values(null,#{userName},#{userPwd},#{age})")
+	//@Options()
 	public int addUser(UserBean user);
 	
 	

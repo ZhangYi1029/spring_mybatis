@@ -1,4 +1,4 @@
-package org.com.yi.spring_mybatis.usermag.aspectjs;
+package org.com.yi.spring_mybatis.aspectjs;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -10,8 +10,7 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.com.yi.spring_mybatis.usermag.dao.mapper.UserMapper;
-import org.com.yi.spring_mybatis.usermag.utils.SessionUtils;
+import org.com.yi.spring_mybatis.utils.SessionUtils;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -20,13 +19,13 @@ public class ConnectionAspectJ {
 
 	private SqlSession session;
 
-	@Before("execution(public * org.com.yi.spring_mybatis.usermag.dao.impl.UserBeanDaoImpl.*(..))")
+	@Before("execution(* org.com.yi.spring_mybatis.*.dao.impl.*.*(..))")
 	public void setConnectionBefore(JoinPoint jp) {
 		Object obj = jp.getTarget();
 		String md = jp.getSignature().getName();
 		Class<?> clas = obj.getClass();
 		clas.getTypeParameters();
-
+			System.err.println(obj);
 		try {
 			
 			// Method methodOne=clas.getMethod("setUm",UserMapper.class);
@@ -58,7 +57,7 @@ public class ConnectionAspectJ {
 
 	}
 
-	@AfterThrowing(throwing = "exe", pointcut = ("execution(public * org.com.yi.spring_mybatis.usermag.dao.impl.UserBeanDaoImpl.*(..))"))
+	@AfterThrowing(throwing = "exe", pointcut = ("execution(* org.com.yi.spring_mybatis.*.dao.impl.*.*(..))"))
 	public void executionThrowing(JoinPoint jp, Object exe) {
 		
 		session.rollback();
@@ -70,19 +69,19 @@ public class ConnectionAspectJ {
 
 	
 
-	@AfterReturning(returning = "rvt", pointcut = ("execution(public * org.com.yi.spring_mybatis.usermag.dao.impl.UserBeanDaoImpl.*(..))"))
+	@AfterReturning(returning = "rvt", pointcut = ("execution(* org.com.yi.spring_mybatis.*.dao.impl.*.*(..))"))
 	public void executionReturning() {
 
-		
+		session.commit();
 		session.close();
 		System.err.println("执行成功");
 
 	}
 	
-	@After("execution(public * org.com.yi.spring_mybatis.usermag.dao.impl.UserBeanDaoImpl.*(..))")
-	public void execution(JoinPoint jp) {
-		
-		session.commit();
-		
-	}
+//	@After("execution(public * org.com.yi.spring_mybatis.*.dao.impl.*.*(..))")
+//	public void execution(JoinPoint jp) {
+//		
+//		
+//		
+//	}
 }

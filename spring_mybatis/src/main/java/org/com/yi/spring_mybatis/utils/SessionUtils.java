@@ -1,4 +1,4 @@
-package org.com.yi.spring_mybatis.usermag.utils;
+package org.com.yi.spring_mybatis.utils;
 
 import java.io.IOException;
 import java.io.InputStream;

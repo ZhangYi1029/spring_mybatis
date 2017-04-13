@@ -9,7 +9,6 @@ import javax.annotation.Resource;
 
 import org.com.yi.spring_mybatis.usermag.beans.UserBean;
 import org.com.yi.spring_mybatis.usermag.service.IUserBeanService;
-import org.com.yi.spring_mybatis.usermag.utils.SessionUtils;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -31,19 +30,26 @@ public class TestUser {
 	public void before() {
 
 	}
-	@Ignore
-	public void testQueryUserByMap(){
-		Map map = new HashMap();
-		map.put("name","小");
-		map.put("age",10);
-		
-		List<UserBean> list=userBeanServiceImpl.queryUserByMap(map);
-		
-		System.err.println(list);
+
+	@Test
+	public void testGetUsersListByNameAndPwd() {
+
 		
 		
 	}
-	
+
+	@Ignore
+	public void testQueryUserByMap() {
+		Map map = new HashMap();
+		map.put("name", "小");
+		map.put("age", 10);
+
+		List<UserBean> list = userBeanServiceImpl.queryUserByMap(map);
+
+		System.err.println(list);
+
+	}
+
 	@Ignore
 	public void testBatchFindUser() {
 

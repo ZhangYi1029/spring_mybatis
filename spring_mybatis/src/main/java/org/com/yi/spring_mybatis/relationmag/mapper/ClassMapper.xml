@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace 命名空间 1.分类的作用、避免文件重复 2.就是与我们JAVA接口关联 -->
+<mapper namespace="org.com.yi.spring_mybatis.relationmag.mapper.ClassMapper">
+
+	<resultMap type="ClassBean" id="clasMap">
+		<id property="id" column="c_id" />
+		<result property="name" column="c_name" javaType="java.lang.String" />
+		<collection property="list" javaType="java.util.List"
+			column="c_id" fetchType="lazy" select="getStudentByClassId"></collection>
+
+	</resultMap>
+
+
+
+	<select id="getClassByClassId" resultMap="clasMap">
+
+		select * from class where c_id=#{id}
+
+
+	</select>
+
+	<select id="getStudentByClassId" resultType="StudentBean">
+
+		select s_id as id ,s_name as name from student where c_id =#{id}
+
+	</select>
+
+</mapper>

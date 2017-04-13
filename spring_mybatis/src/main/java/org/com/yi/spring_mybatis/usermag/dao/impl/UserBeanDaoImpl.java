@@ -7,7 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.com.yi.spring_mybatis.usermag.beans.UserBean;
 import org.com.yi.spring_mybatis.usermag.dao.IUserBeanDao;
 import org.com.yi.spring_mybatis.usermag.dao.mapper.UserMapper;
-import org.com.yi.spring_mybatis.usermag.utils.SessionUtils;
+import org.com.yi.spring_mybatis.utils.SessionUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -49,7 +49,6 @@ public class UserBeanDaoImpl implements IUserBeanDao {
 
 	public int batchDeleteUserBean(List<UserBean> list) {
 		// TODO Auto-generated method stub
-		System.out.println(10/0);
 		return um.batchDeleteUserBean(list);
 	}
 
@@ -64,6 +63,16 @@ public class UserBeanDaoImpl implements IUserBeanDao {
 		// TODO Auto-generated method stub
 
 		return um.queryUserByMap(map);
+	}
+
+	public int countUserNumber(Map map) {
+		// TODO Auto-generated method stub
+		return um.countUserNumber(map);
+	}
+
+	public List<UserBean> getUsersListByNameAndPwd(Map map) {
+		// TODO Auto-generated method stub
+		return um.getUsersListByNameAndPwd(map);
 	}
 
 }

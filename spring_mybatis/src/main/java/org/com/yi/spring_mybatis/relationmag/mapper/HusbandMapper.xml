@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace 命名空间 1.分类的作用、避免文件重复 2.就是与我们JAVA接口关联 -->
+<mapper namespace="org.com.yi.spring_mybatis.relationmag.mapper.HusbandMapper">
+
+	<insert id="marry">
+		insert into husband(h_name)
+		value(#{hus.husbandName,jdbcType=VARCHAR});
+		insert into wife(w_name,h_id) value(#{hus.wife.name,jdbcType=VARCHAR},(select h_id from
+		husband where h_name=#{hus.husbandName,jdbcType=VARCHAR}))
+
+
+	</insert>
+
+
+
+</mapper>

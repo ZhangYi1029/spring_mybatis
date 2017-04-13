@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="org.com.yi.spring_mybatis.game.mapper.GameMapper">
+
+	<resultMap type="GameBean" id="gameMap">
+		<id property="id" column="g_id"/>
+		<result property="gameName" column="g_name" javaType="java.lang.String" />
+		<collection property="playList" fetchType="lazy" column="g_id"
+			javaType="java.util.List" select="getByGameNamePlayerAll"></collection>
+	</resultMap>
+
+	<select id="getGameWithPlayerByName" resultMap="gameMap">
+		select * from game
+
+		<if test="playerName !=null">
+			<where>
+				g_name=#{playerName}
+			</where>
+		</if>
+	</select>
+
+	<select id="getByGameNamePlayerAll" resultType="PlayerBean">
+
+		select p.p_id as
+		id ,p.p_name as playerName from player_game as pg
+		JOIN player as p
+		where pg.fk_p_id=p.p_id and pg.fk_g_id=#{id}
+
+
+	</select>
+
+
+	<resultMap type="GameBean" id="gameMapTwo">
+		<id property="id" column="g_id" />
+		<result property="gameBean" column="g_name" javaType="java.long.String" />
+		<collection property="playList" column="g_id" fetchType="lazy"
+			javaType="java.util.List" select="getGamesByPlayerId"></collection>
+
+	</resultMap>
+
+	<select id="getGameAllByPlayerName" resultMap="gameMapTwo">
+
+		select g_id,g_name from game
+
+		<if test="playerName !=null">
+			<where>
+				g_name like CONCAT(#{playerName},'%')
+			</where>
+
+		</if>
+
+
+	</select>
+
+
+	<select id="getGamesByPlayerId" resultType="PlayerBean">
+
+		select p.p_id as id,p.p_name as playerName from player as p LEFT JOIN
+		player_game as pg
+		on p.p_id=pg.fk_p_id where pg.fk_g_id=#{id}
+
+	</select>
+
+
+</mapper>

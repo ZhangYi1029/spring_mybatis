@@ -26,4 +26,9 @@ public interface UserMapper {
 		public int batchDeleteUserBean(@Param("list")List<UserBean> list);
 		
 		public List<UserBean> queryUserByMap(@Param("map")Map map);
+		
+		public int countUserNumber(@Param("map")Map map);
+		
+		public List<UserBean> getUsersListByNameAndPwd(@Param("map")Map map);
+		
 }
